@@ -5,12 +5,31 @@ const app = express();
 // Assegno la porta 3000 al server
 const PORT = 3000;
 
+// Definisco la cartella in cui sono contenuti gli asset statici: "public"
+app.use(express.static('public'));
+
+// Importo l'oggetto posts dal file posts.js contenuto nella cartella "data"
+const posts = require('./data/posts');
+
 // Creo il progetto base con una rotta base "/" che ritorna un testo semplice con scritto ”Server del mio blog”
 app.get('/', (req, res) => {
     res.send("<h1>Server del mio blog</h1>");
 });
 
+// Creo poi una rotta "/bacheca" che restituisce un oggetto json con tutti i post i il loro conteggio
+app.get('/bacheca', (req, res) => {
+    let arrayObject = {};
+    posts.forEach((post, index) => {
+        arrayObject = {
+            count: index + 1,
+            post: [...posts],
+        }
+    });
 
+    // console.log(arrayObject);
+    // console.log(arrayObject.count);
+    res.json(arrayObject);
+})
 
 
 

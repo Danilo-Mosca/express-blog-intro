@@ -31,3 +31,6 @@ const posts = [
         tags: ["torta", "paesana", "dolce", "tradizionale"]
     }
 ];
+
+// Esporto l'oggetto posts
+module.exports = posts;
