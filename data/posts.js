@@ -3,7 +3,7 @@ const posts = [
     {
         titolo: "Il ciambellone classico: una ricetta semplice e deliziosa",
         contenuto: "Il ciambellone è un dolce tradizionale italiano che si prepara con pochi ingredienti e si gusta in ogni occasione. Con la nostra ricetta potrai preparare un ciambellone soffice e profumato, perfetto per colazioni e merende.",
-        immagine: "images/ciambellone.jpg",
+        immagine: "images/ciambellone.jpeg",
         tags: ["ciambellone", "dolce", "tradizionale", "italiano"]
     },
     {
