@@ -20,6 +20,26 @@ app.get('/', (req, res) => {
 app.get('/bacheca', (req, res) => {
     let arrayObject = {};
     posts.forEach((post, index) => {
+        arrayObject[index] = {
+            count: index + 1,
+            post: [...posts],
+            /* Invece di post: [...posts], avrei potuto inserire tutte le chiavi come di seguito: 
+            titolo: post.titolo,
+            contenuto: post.contenuto,
+            immagine: post.immagine,
+            tags: post.tags,
+            */
+        }
+    });
+    console.log(arrayObject);
+    console.log(arrayObject.count);
+    res.json(arrayObject);
+});
+
+// Creo poi una rotta "/bacheca" che restituisce dall'oggetto json una lista con tutti i post, le loro immagini e i il loro conteggio
+app.get('/bacheca', (req, res) => {
+    let arrayObject = {};
+    posts.forEach((post, index) => {
         arrayObject = {
             count: index + 1,
             post: [...posts],
@@ -30,6 +50,8 @@ app.get('/bacheca', (req, res) => {
     // console.log(arrayObject.count);
     res.json(arrayObject);
 })
+
+
 
 
 
