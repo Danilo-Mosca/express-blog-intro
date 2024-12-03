@@ -60,6 +60,8 @@ app.get('/bacheca', (req, res) => {
 app.get('/bacheca', (req, res) => {
     // Creo una variabile a cui passo l'oggetto query contenente il filtro di ricerca della query string, in questo caso filtra per "tags", quindi ricavo la chiave tags con la destrutturazione
     const { titolo } = req.query;
+    // console.log(req.query.titolo);
+    
     let arrayObject = {
         count: posts.length,
         post: [...posts],
@@ -69,25 +71,29 @@ app.get('/bacheca', (req, res) => {
     if (titolo) {
         // Se la query string è valida restituisco il valore uguale alla query string di titolo
         arrayObject = posts.filter((element) => {
-            return titolo.toLowerCase() === element.titolo.toLowerCase();
+            return element.titolo.toLowerCase().includes(titolo.toLowerCase());
         });
     }
-    // Altrimento restituisco un messaggio di errore
+    // Altrimento se la lungezza di arrayObject è zero significa che non ha trovato nessuna corrispondenza nel primo if e quindi restituisco un messaggio di errore e l'oggetto senza risultati
     if ((arrayObject.length == 0) || (arrayObject == "")) {
-        arrayObject = { error: "La ricerca non ha prodotto risultati" };
+        arrayObject = {
+            error: 404,
+            message: "La ricerca non ha prodotto risultati",
+        };
         res.json(arrayObject);
     }
-    // Se invece non ho inserito nessuna query string restituisco l'intero oggetto dei post
-    if (!titolo) {
-        // res.json(posts);
-        arrayObject = { error: "La ricerca non ha prodotto risultati" };
-        res.json(posts);
-    }
-    else {
-        // console.log(arrayObject);
-        // console.log(arrayObject.count);
+    // Verifico se ho inserito una query string oppure ne ho inserita una con una chiave errata (Es: "titol" invece di "titolo" o anche "Titolo" invece di "titolo" <--- case sensitive) e in questo caso restituisco tutti i post e un messaggio
+    if (req.query.titolo === undefined) {
+        arrayObject = {
+            message: "Non hai inserito una query string oppure hai inserito una chiave errata per la ricerca, restituirò tutti i post",
+            count: posts.length,
+            post: [...posts],
+        };
         res.json(arrayObject);
     }
+    // Restituisco la query string della ricerca nel caso in cui questa fosse valida e la lunghezza dell'oggetto arrayObject sia diversa da zero
+    res.json(arrayObject);
+
 });
 /* FINE VERSIONE CON FILTRI QUERY STRING: */
 
